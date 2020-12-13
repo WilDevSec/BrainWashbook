@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-class CommentSeeder extends Seeder
+class User extends Seeder
 {
     /**
      * Run the database seeds.
@@ -13,6 +13,6 @@ class CommentSeeder extends Seeder
      */
     public function run()
     {
-        Comment::factory()->count(30)->create();
+        User::factory()-hasPosts(3)->hasComments(10)->count(5)->create();
     }
 }
