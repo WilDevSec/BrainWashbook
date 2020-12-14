@@ -18,4 +18,9 @@ class Post extends Model
     {
         return $this->belongsTo('App\Models\User');
     }
+
+    public function commentor()
+    {
+        return $this->hasOneThrough(User::class, Comment::class, 'user_id', 'comment_id');
+    }
 }

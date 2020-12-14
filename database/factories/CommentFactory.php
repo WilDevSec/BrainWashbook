@@ -22,8 +22,9 @@ class CommentFactory extends Factory
     public function definition()
     {
         return [
-            'body'=>$this->faker->string,
-            'user_id'=>App\Models\User::inRandomOrder()-first()-id(),
+            'body'=>$this->faker->sentence,
+            'user_id'=> \App\Models\User::inRandomOrder()->first()->id,
+            'post_id'=> \App\Models\Post::inRandomOrder()->first()->id,
         ];
     }
 }

@@ -51,6 +51,11 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\Comment');
     }
 
+    public function postOwner()
+    {
+        return $this->hasOneThrough(Post::class, Comment::class, 'post_id', 'comment_id');
+    }
+
     public function isAdmin()
     {
         $role = $this->role;
