@@ -12,11 +12,16 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+//Route::get('/', [PagesController::class, 'getLogin']);
 
-Route::get('/', 'PagesController@login');
+Route::get('/', 'App\Http\Controllers\PagesController@getLogin');
 
-Route::get('/home', 'PagesController@homepage');
+#Route::get('/', 'PostController@index')->name('home');
 
-#Route::get('/users/{id}', function($id)){
- #   return view('profile')
-#}
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+require __DIR__.'/auth.php';
+
+Route::resource('posts', 'PostController');
