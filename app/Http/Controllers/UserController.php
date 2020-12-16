@@ -6,6 +6,22 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    /*
+    * @var userRepository
+    */
+    protected $users;
+
+    /**
+     * Create a new controller instance.
+     *
+     * @param  UserRepository  $users
+     * @return void
+     */
+    public function __construct(UserRepository $users)
+    {
+        $this->users = $users;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -38,14 +54,15 @@ class UserController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Show the profile for the given user.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-       # return view
+        $user = $this->users->find($id);
+        return view('pages.profile', ['user' => $user]);
     }
 
     /**
@@ -82,8 +99,4 @@ class UserController extends Controller
         //
     }
 
-    public function posts($user)
-    {
-        return Post::where('postOwner', $user)->get();
-    }
 }

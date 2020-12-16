@@ -13,7 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'Controller@login');
+Route::get('/', 'PagesController@login');
+
+Route::get('/home', 'PagesController@homepage');
 
 #Route::get('/users/{id}', function($id)){
  #   return view('profile')

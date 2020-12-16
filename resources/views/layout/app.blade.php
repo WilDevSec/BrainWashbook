@@ -12,9 +12,10 @@
 
     <body>
 
+        @include('include.navigation')
         <h1> BrainWashBook - @yield('title')</h1>
 
-        <div>
+        <div class="container">
 
             @yield('content')
 

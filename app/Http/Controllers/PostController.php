@@ -82,4 +82,9 @@ class PostController extends Controller
     {
         //
     }
+
+    public function userposts(User $user)
+    {
+        $userposts = Post::where('user', $user)->get();
+    }
 }
