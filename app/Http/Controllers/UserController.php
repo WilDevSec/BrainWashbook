@@ -10,7 +10,6 @@ class UserController extends Controller
     /*
     * @var userRepository
     */
-    protected $users;
 
     /**
      * Create a new controller instance.
@@ -20,7 +19,9 @@ class UserController extends Controller
      */
     public function __construct(UserRepository $users)
     {
-        $this->users = $users;
+        $this->middleware('auth');
+        $this->middleware('log')->only('index');
+        $this->middleware('subscribed')->except('store');
     }
 
     /**

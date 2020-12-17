@@ -12,11 +12,8 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-//Route::get('/', [PagesController::class, 'getLogin']);
 
 Route::get('/', 'App\Http\Controllers\PagesController@getLogin');
-
-#Route::get('/', 'PostController@index')->name('home');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -24,4 +21,17 @@ Route::get('/dashboard', function () {
 
 require __DIR__.'/auth.php';
 
-Route::resource('posts', 'PostController');
+Route::get('/user/{id}', [UserController::class, 'show']);
+
+Route::put('/user/{id}', [UserController::class, 'update']);
+
+Route::resources([
+    'posts' => PostController::class,
+    'comments' => CommentController::class,
+]);
+
+#Route::resource('posts.comments', CommentController::class)->shallow();
+
+Route::resource('users', AdminUserController::class)->parameters([
+    'users' => 'admin_user'
+]);

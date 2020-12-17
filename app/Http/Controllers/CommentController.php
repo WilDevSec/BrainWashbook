@@ -80,6 +80,8 @@ class CommentController extends Controller
      */
     public function destroy(Comment $comment)
     {
-        //
+        $comment = Comment::findOrFail($id);
+        $comment->delete();
+        session()->flash('message', 'Comment Removed')
     }
 }

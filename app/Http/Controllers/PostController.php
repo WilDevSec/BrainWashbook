@@ -78,9 +78,11 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Post $post)
+    public function destroy(Post $id)
     {
-        //
+        $post = Post::findOrFail($id);
+        $post->delete();
+        session()->flash('message', 'Post Removed')
     }
 
     public function userposts(User $user)
