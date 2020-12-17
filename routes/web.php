@@ -35,3 +35,6 @@ Route::resources([
 Route::resource('users', AdminUserController::class)->parameters([
     'users' => 'admin_user'
 ]);
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

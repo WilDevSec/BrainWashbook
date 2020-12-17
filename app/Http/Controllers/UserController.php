@@ -102,4 +102,9 @@ class UserController extends Controller
         //
     }
 
+    public function userposts($id)
+    {
+        return Post::where('id', '=', $id)->paginate(10);
+    }
+
 }
