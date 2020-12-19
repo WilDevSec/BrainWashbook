@@ -6,12 +6,6 @@
 
 @section('content')
 
-    @if(count($posts = Post::where('id' '=' $id)) > 0))
-        <ul>
-            @foreach($posts as $post)
-                <li>{{$post}}</li>
-            @endforeach
-        </ul>
-    @endif
+    <h1>User Profile</h1>
 
 @endsection

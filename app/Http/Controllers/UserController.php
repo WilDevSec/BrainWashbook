@@ -63,7 +63,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        return view('user.profile', [
+        return view('pages.profile', [
             'user' => User::findOrFail($id)
         ]);
     }

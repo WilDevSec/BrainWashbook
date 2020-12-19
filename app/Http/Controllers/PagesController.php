@@ -8,12 +8,12 @@ class PagesController extends Controller
 {
     public function getLogin()
     {
-        return view('pages.login');
+        return view('auth.login');
     }
 
     public function getHomepage()
     {
-        return view('homepage');
+        return view('home');
     }
     
     public function profile($user)

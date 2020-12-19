@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,13 +13,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'App\Http\Controllers\PagesController@getLogin');
+#Route::get('/', 'App\Http\Controllers\PagesController@getHomepage');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->middleware(['auth'])->name('index');
+
+Route::get('/', function () {
+    return view('pages.home');
+})->middleware(['auth'])->name('home');
 
 require __DIR__.'/auth.php';
+
+// Route::get('/profile/{$id}', function(){
+//     if(Auth::check()){
+//         return view('pages.profile');
+//     }
+// })
+
+#Route::get('/feed')
 
 Route::get('/user/{id}', [UserController::class, 'show']);
 
@@ -37,4 +47,4 @@ Route::resource('users', AdminUserController::class)->parameters([
 ]);
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+

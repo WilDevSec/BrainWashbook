@@ -14,7 +14,7 @@ class PostController extends Controller
      */
     public function index(): View
     {
-        return view('posts.index', Post::all());
+        return view('pages.newsfeed', Post::all());
     }
 
     /**
@@ -82,7 +82,7 @@ class PostController extends Controller
     {
         $post = Post::findOrFail($id);
         $post->delete();
-        session()->flash('message', 'Post Removed')
+        session()->flash('message', 'Post Removed');
     }
 
     public function userposts(User $user)
