@@ -1,7 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers;
+use App\Http\Controllers\PagesController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\CommentController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,9 +17,6 @@ use App\Http\Controllers;
 |
 */
 
-#Route::get('/', 'App\Http\Controllers\PagesController@getHomepage');
-
-//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->middleware(['auth'])->name('index');
 
 Route::get('/', function () {
     return view('pages.home');
@@ -23,13 +24,7 @@ Route::get('/', function () {
 
 require __DIR__.'/auth.php';
 
-// Route::get('/profile/{$id}', function(){
-//     if(Auth::check()){
-//         return view('pages.profile');
-//     }
-// })
-
-#Route::get('/feed')
+Route::get('/home', 'HomeController@index');
 
 Route::get('/user/{id}', [UserController::class, 'show']);
 
@@ -45,6 +40,7 @@ Route::resources([
 Route::resource('users', AdminUserController::class)->parameters([
     'users' => 'admin_user'
 ]);
+
 Auth::routes();
 
 

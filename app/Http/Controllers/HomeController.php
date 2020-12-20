@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Post;
 
 class HomeController extends Controller
 {
@@ -21,8 +22,14 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('home');
+        if($request->has('q')){
+    		$q=$request->q;
+    		$posts=Post::where('title','like','%'.$q.'%')->orderBy('timestamps','desc')->paginate(2);
+    	}else{
+    		$posts=Post::orderBy('id','desc')->paginate(2);
+    	}
+        return view('pages.home',['posts'=>$posts]);
     }
 }

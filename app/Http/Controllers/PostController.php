@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class PostController extends Controller
 {
@@ -14,7 +15,15 @@ class PostController extends Controller
      */
     public function index(): View
     {
-        return view('pages.newsfeed', Post::all());
+        $data=Post::all();
+        return view('posts.index',[
+            'data'=>$data,
+        ]);
+    }
+
+    public function postsIndex() {
+        $posts=Post::all();
+        return $posts;
     }
 
     /**
@@ -46,7 +55,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //
+        return view('posts.show', ['post' => $post]);
     }
 
     /**
