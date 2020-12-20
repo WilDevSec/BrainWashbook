@@ -5,6 +5,7 @@ use App\Http\Controllers\PagesController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\NewsFeedController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +30,8 @@ Route::get('/home', 'HomeController@index');
 Route::get('/user/{id}', [UserController::class, 'show']);
 
 Route::put('/user/{id}', [UserController::class, 'update']);
+
+Route::get('/newsfeed', [NewsFeedController::class, 'index']);
 
 Route::resources([
     'posts' => PostController::class,
