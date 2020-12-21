@@ -56,13 +56,4 @@ class User extends Authenticatable
         return $this->hasOneThrough(Post::class, Comment::class, 'post_id', 'comment_id');
     }
 
-    public function isAdmin()
-    {
-        $role = $this->role;
-        if ($role == 'admin')
-        {
-            return true;
-        }
-        return false;
-    }
 }

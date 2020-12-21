@@ -3,9 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\NewsFeedController;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,20 +18,18 @@ use App\Http\Controllers\NewsFeedController;
 |
 */
 
-
-Route::get('/', function () {
-    return view('pages.home');
-})->middleware(['auth'])->name('home');
+Route::get('/', [HomeController::class, 'homepage'])->middleware(['auth'])->name('home');
 
 require __DIR__.'/auth.php';
 
-Route::get('/home', 'HomeController@index');
+Route::get('/home', [HomeController::class, 'homepage']);
 
 Route::get('/user/{id}', [UserController::class, 'show']);
 
 Route::put('/user/{id}', [UserController::class, 'update']);
 
 Route::get('/newsfeed', [NewsFeedController::class, 'index']);
+
 
 Route::resources([
     'posts' => PostController::class,
@@ -40,7 +38,7 @@ Route::resources([
 
 #Route::resource('posts.comments', CommentController::class)->shallow();
 
-Route::resource('users', AdminUserController::class)->parameters([
+Route::resource('users', AdminController::class)->parameters([
     'users' => 'admin_user'
 ]);
 

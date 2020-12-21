@@ -2,29 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Admin;
 use Illuminate\Http\Request;
-use App\Models\User;
-use App\Http\Controllers\Controller;
 
-class UserController extends Controller
+class AdminController extends Controller
 {
-    /*
-    * @var userRepository
-    */
-
-    /**
-     * Create a new controller instance.
-     *
-     * @param  UserRepository  $users
-     * @return void
-     */
-    // public function __construct(UserRepository $users)
-    // {
-    //     $this->middleware('auth');
-    //     $this->middleware('log')->only('index');
-    //     $this->middleware('subscribed')->except('store');
-    // }
-
     /**
      * Display a listing of the resource.
      *
@@ -57,25 +39,23 @@ class UserController extends Controller
     }
 
     /**
-     * Show the profile for the given user.
+     * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Admin  $admin
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Admin $admin)
     {
-        return view('pages.profile', ['user' => User::findOrFail($id)]);
-
-        
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Admin  $admin
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Admin $admin)
     {
         //
     }
@@ -84,10 +64,10 @@ class UserController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\Admin  $admin
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Admin $admin)
     {
         //
     }
@@ -95,17 +75,11 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\Admin  $admin
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Admin $admin)
     {
         //
     }
-
-    public function userposts($id)
-    {
-        return Post::where('id', '=', $id)->paginate(10);
-    }
-
 }

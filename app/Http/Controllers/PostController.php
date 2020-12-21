@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use App\Http\Controllers\Controller;
 
 class PostController extends Controller
 {
@@ -31,9 +32,13 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        if ($request->user()->valid_user()) {
+            return view('posts.create');
+        } else {
+            return redirect('/')->with('error', 'Must log in to create posts');
+        }
     }
 
     /**

@@ -12,6 +12,8 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -40,10 +42,10 @@
                             <a class="nav-link" href="/newsfeed">Latest Posts</a>
                           </li>
                           <li class="nav-item">
-                            <a class="nav-link" href="#">Create Post</a>
+                            <a class="nav-link" href="/posts/create">Create Post</a>
                           </li>
                           <li class="nav-item">
-                            <a class="nav-link" href="/profile">Profile</a>
+                            <a class="nav-link" href="/user/{{Auth::user()->id}}">Profile</a>
                           </li>
                     </ul>
 
@@ -86,6 +88,14 @@
                 </div>
             </div>
         </nav>
+
+        @if(Session::get('error'))
+        <div class="alert alert-warning alert-block">
+            <button type="button" class="close" data-dismiss="alert"></button>
+            <strong>Must log in to create posts</strong>
+        </div>
+        
+        @endif
 
         <main class="py-4">
             @yield('content')
