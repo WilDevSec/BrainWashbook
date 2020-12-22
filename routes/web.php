@@ -1,11 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PagesController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\NewsFeedController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,11 +30,14 @@ Route::put('/user/{id}', [UserController::class, 'update']);
 
 Route::get('/newsfeed', [NewsFeedController::class, 'index']);
 
+// Route::resources([
+//     'posts' => PostController::class,
+//     'comments' => CommentController::class,
+// ]);
 
-Route::resources([
-    'posts' => PostController::class,
-    'comments' => CommentController::class,
-]);
+Route::get('/posts/create', [PostController::class, 'create']);
+
+Route::post('/posts', [PostController::class, 'store']);
 
 #Route::resource('posts.comments', CommentController::class)->shallow();
 

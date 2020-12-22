@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-    <title>BrainWashBook @yield('title')</title>
+    <title>BrainWashBook</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -45,7 +45,7 @@
                             <a class="nav-link" href="/posts/create">Create Post</a>
                           </li>
                           <li class="nav-item">
-                            <a class="nav-link" href="/user/{{Auth::user()->id}}">Profile</a>
+                            <a class="nav-link" href="/user/{{Auth::id()}}">Profile</a>
                           </li>
                     </ul>
 

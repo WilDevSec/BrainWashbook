@@ -6,6 +6,7 @@ use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -34,11 +35,7 @@ class PostController extends Controller
      */
     public function create(Request $request)
     {
-        if ($request->user()->valid_user()) {
-            return view('posts.create');
-        } else {
-            return redirect('/')->with('error', 'Must log in to create posts');
-        }
+       return view('posts.create');
     }
 
     /**
@@ -49,7 +46,13 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $post = new Post();
+        $post->title = $request->input('title');
+        $post->body = $request->get('body');
+        $post->user_id = $request->user()->id;
+        $message = 'Post published successfully';
+        $post->save();
+        return redirect('/newsfeed')->withMessage($message);
     }
 
     /**
