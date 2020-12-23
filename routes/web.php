@@ -30,10 +30,7 @@ Route::put('/user/{id}', [UserController::class, 'update']);
 
 Route::get('/newsfeed', [NewsFeedController::class, 'index']);
 
-// Route::resources([
-//     'posts' => PostController::class,
-//     'comments' => CommentController::class,
-// ]);
+Route::resource('comments', CommentController::class);
 
 Route::get('/posts/create', [PostController::class, 'create']);
 
@@ -41,9 +38,7 @@ Route::post('/posts', [PostController::class, 'store']);
 
 #Route::resource('posts.comments', CommentController::class)->shallow();
 
-Route::resource('users', AdminController::class)->parameters([
-    'users' => 'admin_user'
-]);
+Route::resource('admins', AdminController::class);
 
 Auth::routes();
 

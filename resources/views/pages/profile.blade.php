@@ -16,6 +16,16 @@
             <li class="list-group-item">
                 Joined on {{$user->created_at->format('M d,Y \a\t h:i a') }}
             </li>
+            @foreach($posts as $post)
+            <div class="card bg-light mb-3" style="max-width: 60%;padding:4em;margin:min(2%);">
+                <div class="card-header">{{$post->title}}</div>
+                <div class="card-body">
+                    <h6 href="#" class="card-title">{{$post->body}}</h6>
+                    <p class="card-text">{{$post->user->name}} - {{$post->created_at}}</p>
+                    
+                </div>
+            </div>
+            @endforeach
         </ul>
     </div>
     

@@ -101,9 +101,4 @@ class PostController extends Controller
         $post->delete();
         session()->flash('message', 'Post Removed');
     }
-
-    public function userposts(User $user)
-    {
-        $userposts = Post::where('user', $user)->get();
-    }
 }
