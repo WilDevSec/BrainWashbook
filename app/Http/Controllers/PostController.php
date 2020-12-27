@@ -15,15 +15,8 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(): View
-    {
-        $data=Post::all();
-        return view('posts.index',[
-            'data'=>$data,
-        ]);
-    }
 
-    public function postsIndex() {
+    public function index() {
         $posts=Post::all();
         return $posts;
     }
@@ -61,9 +54,11 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $post)
+    public function show($id)
     {
-        return view('posts.show', ['post' => $post]);
+        $post = Post::findOrFail($id);
+        $comments = $post->comments()->get();
+        return view('posts.post')->with('post', $post)->with('comments', $comments);
     }
 
     /**
@@ -72,9 +67,16 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function edit(Post $post)
+    public function edit($id)
     {
-        //
+        $post = Post::findOrFail($id);
+        if ($post->user_id == $request->user()->id || $request->admin()){
+           return view('posts.edit')->with($post);
+        }
+        else {
+            return redirect('/newsfeed')->with('You do not have permission to edit this post.');
+        }
+        
     }
 
     /**
@@ -84,9 +86,15 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post)
+    public function update(Request $request, $id)
     {
-        //
+        $post = Post::findOrFail($id);
+        $post->title = $request->input('title');
+        $post->body = $request->get('body');
+        $post->user_id = $request->user()->id;
+        $message = 'Post updated successfully';
+        $post->save();
+        return redirect('/newsfeed')->withMessage($message);
     }
 
     /**
@@ -95,10 +103,16 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Post $id)
+    public function destroy(Request $request, $id)
     {
         $post = Post::findOrFail($id);
-        $post->delete();
-        session()->flash('message', 'Post Removed');
+        if ($post->user_id == $request->user()->id || $request->admin()){
+            $post->delete();
+            $message = 'Post Deleted'
+        }
+        else {
+            $message = 'You do not have permission to delete this post.'
+        }
+        return redirect('/newsfeed')->with($message);
     }
 }

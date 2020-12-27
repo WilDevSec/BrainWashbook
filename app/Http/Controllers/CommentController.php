@@ -17,7 +17,7 @@ class CommentController extends Controller
     {
         $post = Post::findOrFail($id);
         $comments = $post->comments()->get();
-        return $comments;
+        return $comments->latest();
     }
 
     /**
@@ -42,8 +42,9 @@ class CommentController extends Controller
             'body' => $request->body,
             'user_id' => $request->user()->id;
         ]);
-        $comment = Comment::where('id', $comment->id)->with('user')->first();
-        return $comment->toJson();
+        #$comment = Comment::where('id', $comment->id)->with('user')->first();
+        $comment->save();
+        return response()->toJson($comment);
 
         // $request->validate([ 'body' => 'required', ]);
         // $post = Post::where('id')->findOrFail($id);
@@ -102,7 +103,13 @@ class CommentController extends Controller
     public function destroy(Comment $comment)
     {
         $comment = Comment::findOrFail($id);
-        $comment->delete();
-        session()->flash('message', 'Comment Removed')
+        if ($comment->user_id == $request->user()->id || $request->admin()){
+            $comment->delete();
+            $message = 'Comment Deleted'
+        }
+        else {
+            $message = 'You do not have permission to delete this comment.'
+        }
+        return redirect('/newsfeed')->with($message);
     }
 }

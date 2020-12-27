@@ -106,7 +106,7 @@ class UserController extends Controller
 
     public function userposts($id)
     {
-        return Post::where('id', '=', $id)->paginate(10);
+        return Post::where('user_id', '=', $id)->paginate(10);
     }
 
 }

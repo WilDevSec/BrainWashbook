@@ -36,7 +36,7 @@ Route::get('/posts/create', [PostController::class, 'create']);
 
 Route::post('/posts', [PostController::class, 'store']);
 
-#Route::resource('posts.comments', CommentController::class)->shallow();
+Route::get('/posts/{id}', [PostController::class, 'show']);
 
 Route::resource('admins', AdminController::class);
 
