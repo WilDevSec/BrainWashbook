@@ -74,7 +74,7 @@ class PostController extends Controller
            return view('posts.edit')->with($post);
         }
         else {
-            return redirect('/newsfeed')->with('You do not have permission to edit this post.');
+            return redirect('/newsfeed')->withMessage('You do not have permission to edit this post.');
         }
         
     }
@@ -106,13 +106,13 @@ class PostController extends Controller
     public function destroy(Request $request, $id)
     {
         $post = Post::findOrFail($id);
-        if ($post->user_id == $request->user()->id || $request->admin()){
+        if ($post->user_id == $request->user()->id){
             $post->delete();
-            $message = 'Post Deleted'
+            $message = 'Post Deleted';
         }
         else {
-            $message = 'You do not have permission to delete this post.'
+            $message = 'Can only delete your own posts';
         }
-        return redirect('/newsfeed')->with($message);
+        return redirect('/newsfeed')->withMessage($message);
     }
 }

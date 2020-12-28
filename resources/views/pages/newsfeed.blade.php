@@ -2,6 +2,7 @@
 @section('title', 'Post Feed')
 
 @section('content')
+
 <div class="card mb-4">
     <h5 class="display-3" style="margin:auto;width:5.3em;">Recent Posts</h5>
     <div class="list-group list-group-flush">

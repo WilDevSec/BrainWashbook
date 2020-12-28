@@ -9,30 +9,37 @@
     <div class="card bg-light mb-3" style="max-width: 60%;padding:4em;margin:min(2%);">
         <div class="card-header">{{$post->title}}</div>
         <div class="card-body">
-            <h6 href="#" class="card-title">{{$post->body}}</h6>
-            <p class="card-text">{{$post->user->name}} - {{$post->created_at}}</p>
-        </div>
-        @foreach($comments as $comment)
-        <div class="row" style="margin-top:2px;">
-            <div class="media-body">
-                <h4 class="media-heading">{{$comment->user->name}} said...</h4>
-                <p>
-                    {{$comment->body}}
-                </p>
-                <span style="color: #aaa;">on {{$comment->created_at}}</span>
+            <div class="row" style="margin-top:2px;margin-bottom:40px;">
+                <h5 class="card-title">{{$post->body}}</h5>
+                <p class="card-text">{{$post->user->name}} - {{$post->created_at}}</p>
             </div>
-        </div>
-        @endforeach
-        <div class="row">
-            <h4>Write a comment</h4>
-            @csrf
-            <div class="form-group">
-                <input type="text" class="form-control" name="body" />
-            </div>
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary">
-                    Create
+            <form action="/posts/{{$post->id}}/delete">
+                <button class="btn btn-primary">
+                    Delete Post
                 </button>
+            </form>
+            <hr>
+            <h5 class="row">Comments:</h5>
+            @foreach($comments as $comment)
+            <div class="row" style="margin-top:2px;">
+                <div class="media-body">
+                    <h6 class="media-heading">{{$comment->user->name}}:</h6>
+                    <p>{{$comment->body}}</p>
+                    <span style="color: #aaa;">on {{$comment->created_at}}</span>
+                </div>
+            </div>
+            @endforeach
+            <div class="row">
+                <h6>Write a comment</h6>
+                @csrf
+                <div class="form-group">
+                    <input type="text" class="form-control" name="body" />
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">
+                        Publish
+                    </button>
+                </div>
             </div>
         </div>
     </div>

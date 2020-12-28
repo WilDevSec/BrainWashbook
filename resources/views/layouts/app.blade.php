@@ -88,16 +88,8 @@
                 </div>
             </div>
         </nav>
-
-        @if(Session::get('error'))
-        <div class="alert alert-warning alert-block">
-            <button type="button" class="close" data-dismiss="alert"></button>
-            <strong>Must log in to create posts</strong>
-        </div>
-        
-        @endif
-
         <main class="py-4">
+            @include('messages')
             @yield('content')
         </main>
     </div>
