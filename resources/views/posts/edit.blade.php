@@ -6,7 +6,7 @@
 	<div class="row">
 	    <div class="col-md-8 col-md-offset-2">
     		<h1>Edit post</h1>
-			<form action="/posts" method="POST">
+			<form action="/posts/{{$post->id}}/update" method="POST">
 				@csrf
     		    
     		    <div class="form-group">

@@ -14,14 +14,14 @@
                 <p class="card-text">{{$post->user->name}} - {{$post->created_at}}</p>
             </div>
             <div>
-                <form action="/posts/{{$post->id}}/delete">
+                <form action="/posts/{{$post->id}}/edit">
                     <button class="btn btn-primary">
                         Edit Post
                     </button>
                 </form>
             </div>
             <div>
-                <form action="/posts/edit">
+                <form action="/posts/{{$post->id}}/delete">
                     <button class="btn btn-primary">
                         Delete Post
                     </button>

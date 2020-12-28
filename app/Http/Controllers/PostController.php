@@ -67,11 +67,11 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
         $post = Post::findOrFail($id);
         if ($post->user_id == $request->user()->id || $request->admin()){
-           return view('posts.edit')->with($post);
+           return view('posts.edit')->with('post', $post);
         }
         else {
             return redirect('/newsfeed')->withMessage('You do not have permission to edit this post.');

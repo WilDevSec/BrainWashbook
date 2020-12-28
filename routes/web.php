@@ -26,7 +26,7 @@ Route::get('/home', [HomeController::class, 'homepage']);
 
 Route::get('/user/{id}', [UserController::class, 'show']);
 
-Route::put('/user/{id}', [UserController::class, 'update']);
+#Route::put('/user/{id}', [UserController::class, 'update']);
 
 Route::get('/admin/{id}/delete', [UserController::class, 'destroy']);
 
@@ -36,9 +36,11 @@ Route::resource('comments', CommentController::class);
 
 Route::get('/posts/create', [PostController::class, 'create']);
 
-Route::get('/posts/edit', [PostController::class, 'edit']);
+Route::get('/posts/{id}/edit', [PostController::class, 'edit']);
 
 Route::post('/posts', [PostController::class, 'store']);
+
+Route::post('/posts/{id}/update', [PostController::class, 'update']);
 
 Route::get('/posts/{id}', [PostController::class, 'show']);
 
