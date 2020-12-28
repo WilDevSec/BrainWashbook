@@ -13,11 +13,20 @@
                 <h5 class="card-title">{{$post->body}}</h5>
                 <p class="card-text">{{$post->user->name}} - {{$post->created_at}}</p>
             </div>
-            <form action="/posts/{{$post->id}}/delete">
-                <button class="btn btn-primary">
-                    Delete Post
-                </button>
-            </form>
+            <div>
+                <form action="/posts/{{$post->id}}/delete">
+                    <button class="btn btn-primary">
+                        Edit Post
+                    </button>
+                </form>
+            </div>
+            <div>
+                <form action="/posts/edit">
+                    <button class="btn btn-primary">
+                        Delete Post
+                    </button>
+                </form>
+            </div>
             <hr>
             <h5 class="row">Comments:</h5>
             @foreach($comments as $comment)

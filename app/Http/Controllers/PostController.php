@@ -45,7 +45,7 @@ class PostController extends Controller
         $post->user_id = $request->user()->id;
         $message = 'Post published successfully';
         $post->save();
-        return redirect('/newsfeed')->withMessage($message);
+        return redirect('/newsfeed')->withMessage ($message);
     }
 
     /**
