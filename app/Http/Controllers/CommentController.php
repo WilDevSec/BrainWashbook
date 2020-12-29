@@ -13,11 +13,11 @@ class CommentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($id)
+    public function index(Post $post)
     {
-        $post = Post::findOrFail($id);
+        #$post = Post::findOrFail($id);
         $comments = $post->comments()->get();
-        return $comments->latest();
+        return response()->toJson($comments->with('user')->latest()->get());
     }
 
     /**
@@ -38,26 +38,19 @@ class CommentController extends Controller
      */
     public function store(Request $request, Post $post)
     {
+        $validated = $request->validate([
+            'body' => 'required',
+        ]);
+
+        #$post = Post::findOrFail($id);
         $comment = $post->comments()->create([
             'body' => $request->body,
-            'user_id' => $request->user()->id;
+            'user_id' => $request->user()->id,
         ]);
         #$comment = Comment::where('id', $comment->id)->with('user')->first();
         $comment->save();
-        return response()->toJson($comment);
-
-        // $request->validate([ 'body' => 'required', ]);
-        // $post = Post::where('id')->findOrFail($id);
-        // $comment = new Comment();
-        // $comment->body = $request->input('body');
-        // $comment->user_id = $request->user()->id;
-        // $comment->post_id = $post->post()->id;
-        // $comment->save($request->all());
-
-        // $count = count(Comment::where('post_id',$id)->get());
-        // $comment->count = $count; 
-
-        // return response()->json($comment);
+        #return response()->toJson($comment);
+        return $comment->toJson();
     }
 
     /**
@@ -105,10 +98,10 @@ class CommentController extends Controller
         $comment = Comment::findOrFail($id);
         if ($comment->user_id == $request->user()->id || $request->admin()){
             $comment->delete();
-            $message = 'Comment Deleted'
+            $message = 'Comment Deleted';
         }
         else {
-            $message = 'You do not have permission to delete this comment.'
+            $message = 'You do not have permission to delete this comment.';
         }
         return redirect('/newsfeed')->with($message);
     }

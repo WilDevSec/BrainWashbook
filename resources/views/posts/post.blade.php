@@ -29,20 +29,18 @@
             </div>
             <hr>
             <h5 class="row">Comments:</h5>
-            @foreach($comments as $comment)
-            <div class="row" style="margin-top:2px;">
+            <div class="media" style="margin-top:10px;" v-for="comment in comments">
                 <div class="media-body">
-                    <h6 class="media-heading">{{$comment->user->name}}:</h6>
-                    <p>{{$comment->body}}</p>
-                    <span style="color: #aaa;">on {{$comment->created_at}}</span>
+                    <h6 class="media-heading">@{{comment.user.name}}:</h6>
+                    <p>@{{comment.body}}</p>
+                    <span style="color: #aaa;">on @{{comment.created_at}}</span>
                 </div>
             </div>
-            @endforeach
             <div class="row">
                 <h6>Write a comment</h6>
                 @csrf
                 <div class="form-group">
-                    <input type="text" class="form-control" name="body" />
+                    <input type="text" class="form-control" name="body" v-model="commentBox"/>
                 </div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary">
@@ -56,46 +54,45 @@
 
 @endsection
 
-{{-- <script>
-    $('')
-
-
-
-const app = new Vue({
-    el: '#app',
-    data: {
-        comments: {},
-        commentBox: '',
-        post: {{!! $post->toJson() !!}},
-        user: {!! Auth::check() ? Auth::user()->toJson() : 'null' !!}
-    },
-    mounted() {
-        this.getComments();
-    },
-    methods: {
-        getComments() {
-            axios.get('/api/posts/'+this.post.id+'/comments')
-                .then((response) => {
-                    this.comments = response.data
-                })
-                .catch(function (error) {
-                    console.log(error);
-                }
-            );
-        },
-        postComment() {
-            axios.post('/api/posts/'+this.post.id+'/comment', {
-                api_token: this.user.api_token,
-                body: this.commentBox
-            })
-            .then((response) => {
-                this.comments.unshift(response.data);
-                this.commentBox = '';
-            })
-            .catch((error) => {
-                console.log(error);
-            })
+@section('script')
+<script>
+    const app = new Vue({
+        el: '#app',
+        data: {
+            comments: {},
+            commentBox: '',
+            post: {!! $post->toJson() !!},
+            user: {!! Auth::check() ? Auth::user()->toJson() : 'null' !!}
         }
-    }
-})
-<script> --}}
+        methods: {
+            getComments() {
+                axios.get(`/api/posts/${this.post.id}/comments`)
+                    .then((response) => {
+                        this.comments = response.data
+                    })
+                    .catch(function (error) {
+                        //need to add error handle better than console log here
+                        console.log(error);
+                    }
+                );
+            },
+            postComment() {
+                axios.post(`/api/posts/${this.post.id}/comment`, {
+                    api_token: this.user.api_token,
+                    body: this.commentBox
+                })
+                .then((response) => {
+                    this.comments.unshift(response.data);
+                    this.commentBox = '';
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
+            }
+        }
+        mounted(){
+            this.getComments();
+        }
+    })
+</script>
+@endsection
