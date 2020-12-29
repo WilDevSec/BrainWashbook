@@ -31,7 +31,7 @@
             <h5 class="row">Comments:</h5>
             <div class="media" style="margin-top:10px;" v-for="comment in comments">
                 <div class="media-body">
-                    <h6 class="media-heading">@{{comment.user.name}}:</h6>
+                    <h6 class="media-heading">@{{ comment.user.name }}:</h6>
                     <p>@{{comment.body}}</p>
                     <span style="color: #aaa;">on @{{comment.created_at}}</span>
                 </div>
