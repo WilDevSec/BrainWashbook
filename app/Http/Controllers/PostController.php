@@ -106,7 +106,7 @@ class PostController extends Controller
     public function destroy(Request $request, $id)
     {
         $post = Post::findOrFail($id);
-        if ($post->user_id == $request->user()->id){
+        if ($post->user_id == $request->user()->id || $request->routeIs('admin.*')){
             $post->delete();
             $message = 'Post Deleted';
         }

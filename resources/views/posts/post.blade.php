@@ -2,9 +2,6 @@
 
 @section('content')
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
-<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-
 <div class="container">
     <div class="card bg-light mb-3" style="max-width: 60%;padding:4em;margin:min(2%);">
         <div class="card-header">{{$post->title}}</div>
@@ -43,7 +40,7 @@
                     <input type="text" class="form-control" name="body" v-model="commentBox"/>
                 </div>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary">
+                    <button type="submit" class="btn btn-primary" @click.prevent="postComment">
                         Publish
                     </button>
                 </div>
