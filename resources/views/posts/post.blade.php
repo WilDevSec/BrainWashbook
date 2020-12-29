@@ -10,7 +10,7 @@
         <div class="card-header">{{$post->title}}</div>
         <div class="card-body">
             <div class="row" style="margin-top:2px;margin-bottom:40px;">
-                <h5 class="card-title">{{$post->body}}</h5>
+                "<h5 class="card-title">{{$post->body}}</h5>
                 <p class="card-text">{{$post->user->name}} - {{$post->created_at}}</p>
             </div>
             <div>
@@ -29,7 +29,7 @@
             </div>
             <hr>
             <h5 class="row">Comments:</h5>
-            <div class="media" style="margin-top:10px;" v-for="comment in comments">
+            <div class="media" style="margin-top:10px;" id="app" v-for="comment in comments">
                 <div class="media-body">
                     <h6 class="media-heading">@{{ comment.user.name }}:</h6>
                     <p>@{{comment.body}}</p>
