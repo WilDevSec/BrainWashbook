@@ -63,7 +63,10 @@
             commentBox: '',
             post: {!! $post->toJson() !!},
             user: {!! Auth::check() ? Auth::user()->toJson() : 'null' !!}
-        }
+        },
+        mounted(){
+            this.getComments();
+        },
         methods: {
             getComments() {
                 axios.get(`/api/posts/${this.post.id}/comments`)
@@ -85,14 +88,11 @@
                     this.comments.unshift(response.data);
                     this.commentBox = '';
                 })
-                .catch((error) => {
+                .catch(function (error) {
                     console.log(error);
-                })
+                });
             }
         }
-        mounted(){
-            this.getComments();
-        }
-    })
+    });
 </script>
 @endsection

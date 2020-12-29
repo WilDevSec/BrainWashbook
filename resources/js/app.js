@@ -1,5 +1,6 @@
-require('./bootstrap');
+import './bootstrap';
 
-require('alpinejs');
+import 'jquery';
 
 window.Vue = require('vue');
+
