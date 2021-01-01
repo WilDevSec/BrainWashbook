@@ -18,37 +18,27 @@ use App\Http\Controllers\PostController;
 |
 */
 
-Route::get('/', [HomeController::class, 'homepage'])->middleware(['auth'])->name('home');
-
+Route::get('/', [HomeController::class, 'homepage'])->middleware(['auth']);
 require __DIR__.'/auth.php';
-
 Route::get('/home', [HomeController::class, 'homepage']);
+Route::get('/admin/home', [HomeController::class, 'adminHomepage'])->name('admin.home')->middleware('is_admin');
 
 Route::get('/user/{id}', [UserController::class, 'show']);
-
 #Route::put('/user/{id}', [UserController::class, 'update']);
-
 Route::get('/admin/{id}/delete', [UserController::class, 'destroy']);
 
 Route::get('/newsfeed', [NewsFeedController::class, 'index']);
 
-// Route::resource('comments', CommentController::class);
-
 Route::get('/posts/create', [PostController::class, 'create']);
-
 Route::get('/posts/{id}/edit', [PostController::class, 'edit']);
-
 Route::post('/posts', [PostController::class, 'store']);
-
 Route::post('/posts/{id}/update', [PostController::class, 'update']);
-
 Route::get('/posts/{id}', [PostController::class, 'show']);
-
 Route::get('/posts/{id}/delete', [PostController::class, 'destroy']);
-
 // Route::post('/posts/{id}/comment', [PostController::class, 'saveComment']);
+Route::get('/admin/posts/{id}', [PostController::class, 'showAdmin'])->middleware('is_admin');
 
-Route::resource('admins', AdminController::class);
+// Route::resource('comments', CommentController::class);
 
 Auth::routes();
 

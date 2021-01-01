@@ -26,4 +26,9 @@ class HomeController extends Controller
     {
         return view('pages.home');
     }
+
+    public function adminHomepage(Request $request)
+    {
+        return view('admin.home');
+    }
 }

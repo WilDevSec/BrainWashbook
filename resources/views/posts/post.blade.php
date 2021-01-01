@@ -37,17 +37,18 @@
             </div>
             <div class="row">
                 <h6>Write a comment</h6>
-                <form>
+                <form method="POST" id="commentForm">
                     @csrf
                     <div class="form-group">
-                        <input type="text" class="form-control" name="body" v-model="commentBody"/>
+                        <input type="text" class="form-group" name="commentBody" id="commentBody"/>
                     </div>
                     <div class="form-group">
-                        <button class="btn btn-primary" @click="postComment">
+                        <button class="btn btn-primary" type="submit" name="submit" id="submit"> {{-- @click="postComment" --}}
                             Publish
                         </button>
                     </div>
                 </form>
+                <span id="commentMessage"></span>
             </div>
         </div>
     </div>
@@ -57,6 +58,24 @@
 
 @section('script')
 <script>
+// $(document).ready(function(){
+//     $('#commentForm').on('submit', function(event){
+//         event.preventDefault();
+//         var form_data = $(this).serialize();
+//         $.ajax({
+//             url:"api/posts/"+this.post.id+"/store",
+//             method:"POST",
+//             data:form_data,
+//             dataType:"JSON",
+//             success:function(data){
+//                 if(data.error != ''){
+//                     $.('#commentForm')[0].reset();
+//                     $.('commentMessage').html(data.error);
+//                 }
+//             }
+//         })
+//     })
+// })
     const app = new Vue({
         el: '#app',
         data: {
@@ -80,31 +99,27 @@
                 );
             },
             postComment() {
-                // // axios.post("/api/posts/"+this.post.id+"/store", {
-                // //     body: this.commentBody
-                // // })
-                // .then((response) => {
-                //     this.comments.push(response.data);
-                //     this.commentBody = '';
-                // })
-                // .catch(response => {
-                //     console.log(response);
-                // });
-                axios({
-                    method: 'post',
-                    body: document.getElementById("commentBody"),
-                    url: '/api/posts/'+this.post.id+'/store'
+                axios.post("/api/posts/"+this.post.id+"/store", {
+                    body: this.commentBody
                 })
-                .then(function (response) {
+                .then((response) => {
+                    this.comments.push(response.data);
+                    this.commentBody = '';
+                })
+                .catch(response => {
                     console.log(response);
-                })
-                .catch(function (error) {
-                    // var errors = $.parseJSON(error.responseText);
-                    // $.each(errors, function (key, value) {
-                    //     $('#' + key).parent().addClass('error');
-                    // });
-                    console.log(error);
                 });
+                // axios({
+                //     method: 'post',
+                //     body: document.getElementById("commentBody"),
+                //     url: '/api/posts/'+this.post.id+'/store'
+                // })
+                // .then(function (response) {
+                //     console.log(response);
+                // })
+                // .catch(function (error) {
+                //     console.log(error);
+                // });
             }
         }
     });

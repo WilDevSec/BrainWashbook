@@ -43,9 +43,9 @@ class PostController extends Controller
         $post->title = $request->input('title');
         $post->body = $request->get('body');
         $post->user_id = $request->user()->id;
-        $message = 'Post published successfully';
+        $msg = 'Post published successfully';
         $post->save();
-        return redirect('/newsfeed')->withMessage ($message);
+        return redirect('/newsfeed')->withMessage ($msg);
     }
 
     /**
@@ -70,7 +70,7 @@ class PostController extends Controller
     public function edit(Request $request, $id)
     {
         $post = Post::findOrFail($id);
-        if ($post->user_id == $request->user()->id || $request->admin()){
+        if ($post->user_id == $request->user()->id || $request->user()->){
            return view('posts.edit')->with('post', $post);
         }
         else {
@@ -92,9 +92,9 @@ class PostController extends Controller
         $post->title = $request->input('title');
         $post->body = $request->get('body');
         $post->user_id = $request->user()->id;
-        $message = 'Post updated successfully';
+        $msg = 'Post updated successfully';
         $post->save();
-        return redirect('/newsfeed')->withMessage($message);
+        return redirect('/newsfeed')->withMessage($msg);
     }
 
     /**
@@ -108,12 +108,12 @@ class PostController extends Controller
         $post = Post::findOrFail($id);
         if ($post->user_id == $request->user()->id || $request->routeIs('admin.*')){
             $post->delete();
-            $message = 'Post Deleted';
+            $msg = 'Post Deleted';
         }
         else {
-            $message = 'Can only delete your own posts';
+            $msg = 'Can only delete your own posts';
         }
-        return redirect('/newsfeed')->withMessage($message);
+        return redirect('/newsfeed')->withMessage($msg);
     }
 
     // Save Comment
@@ -125,6 +125,12 @@ class PostController extends Controller
         return response()->json([
             'bool'=>true
         ]);
+    }
+
+    public function showAdmin($id){
+        $post = Post::findOrFail($id);
+        $comments = $post->comments()->latest()->get();
+        return view('posts.post')->with('post', $post)->with('comments', $comments);
     }
     
 }

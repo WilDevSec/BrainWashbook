@@ -56,9 +56,9 @@ class CommentController extends Controller
         else {
             return withMessage('Must be logged in to post comments');
         }
-        $comment = Comment::where('id', $comment->id)->with('user')->first();
+        $comment = Comment::where('id', $comment->id)->first();
         $comment->save();
-        return $comment;
+        return $comment->with('user');
     }
 
     /**
@@ -106,11 +106,11 @@ class CommentController extends Controller
         $comment = Comment::findOrFail($id);
         if ($comment->user_id == $request->user()->id || $request->admin()){
             $comment->delete();
-            $message = 'Comment Deleted';
+            $msg = 'Comment Deleted';
         }
         else {
-            $message = 'You do not have permission to delete this comment.';
+            $msg = 'You do not have permission to delete this comment.';
         }
-        return redirect('/newsfeed')->with($message);
+        return redirect('/newsfeed')->with($msg);
     }
 }
