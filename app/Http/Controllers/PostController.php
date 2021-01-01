@@ -57,7 +57,7 @@ class PostController extends Controller
     public function show($id)
     {
         $post = Post::findOrFail($id);
-        $comments = $post->comments()->get();
+        $comments = $post->comments()->latest()->get();
         return view('posts.post')->with('post', $post)->with('comments', $comments);
     }
 
@@ -115,4 +115,16 @@ class PostController extends Controller
         }
         return redirect('/newsfeed')->withMessage($message);
     }
+
+    // Save Comment
+    public function saveCommentTwo(Request $request){
+        $data= new Comment();
+        $data->post_id=$request->post;
+        $data->comment_text=$request->comment;
+        $data->save();
+        return response()->json([
+            'bool'=>true
+        ]);
+    }
+    
 }

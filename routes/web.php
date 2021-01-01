@@ -32,7 +32,7 @@ Route::get('/admin/{id}/delete', [UserController::class, 'destroy']);
 
 Route::get('/newsfeed', [NewsFeedController::class, 'index']);
 
-Route::resource('comments', CommentController::class);
+// Route::resource('comments', CommentController::class);
 
 Route::get('/posts/create', [PostController::class, 'create']);
 
@@ -45,6 +45,8 @@ Route::post('/posts/{id}/update', [PostController::class, 'update']);
 Route::get('/posts/{id}', [PostController::class, 'show']);
 
 Route::get('/posts/{id}/delete', [PostController::class, 'destroy']);
+
+// Route::post('/posts/{id}/comment', [PostController::class, 'saveComment']);
 
 Route::resource('admins', AdminController::class);
 

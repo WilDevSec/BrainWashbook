@@ -26,24 +26,28 @@
             </div>
             <hr>
             <h5 class="row">Comments:</h5>
-            <div class="media" style="margin-top:10px;" id="app" v-for="comment in comments">
-                <div class="media-body">
-                    <h6 class="media-heading">@{{ comment.user.name }}:</h6>
-                    <p>@{{comment.body}}</p>
-                    <span style="color: #aaa;">on @{{comment.created_at}}</span>
+            <div id="comments">
+                <div class="media" style="margin-top:10px;" v-for="comment in comments">
+                    <div class="media-body">
+                        <h6 class="media-heading" >@{{comment.user.name}}:</h6>
+                        <p>@{{comment.body}}</p>
+                        <span style="color: #aaa;">on @{{comment.created_at}}</span>
+                    </div>
                 </div>
             </div>
             <div class="row">
                 <h6>Write a comment</h6>
-                @csrf
-                <div class="form-group">
-                    <input type="text" class="form-control" name="body" v-model="commentBox"/>
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary" @click.prevent="postComment">
-                        Publish
-                    </button>
-                </div>
+                <form>
+                    @csrf
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="body" v-model="commentBody"/>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary" @click="postComment">
+                            Publish
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -57,35 +61,48 @@
         el: '#app',
         data: {
             comments: {},
-            commentBox: '',
-            post: {!! $post->toJson() !!},
-            user: {!! Auth::check() ? Auth::user()->toJson() : 'null' !!}
+            commentBody: '',
+            post: {!! $post->toJson() !!}
         },
         mounted(){
-            this.getComments();
+            this.getComments()
         },
         methods: {
             getComments() {
-                axios.get(`/api/posts/${this.post.id}/comments`)
+                axios.get("/api/posts/"+this.post.id+"/index")
                     .then((response) => {
-                        this.comments = response.data
+                        this.comments = response.data;
                     })
-                    .catch(function (error) {
+                    .catch(response => {
                         //need to add error handle better than console log here
-                        console.log(error);
+                        console.log(response);
                     }
                 );
             },
             postComment() {
-                axios.post(`/api/posts/${this.post.id}/comment`, {
-                    api_token: this.user.api_token,
-                    body: this.commentBox
+                // // axios.post("/api/posts/"+this.post.id+"/store", {
+                // //     body: this.commentBody
+                // // })
+                // .then((response) => {
+                //     this.comments.push(response.data);
+                //     this.commentBody = '';
+                // })
+                // .catch(response => {
+                //     console.log(response);
+                // });
+                axios({
+                    method: 'post',
+                    body: document.getElementById("commentBody"),
+                    url: '/api/posts/'+this.post.id+'/store'
                 })
-                .then((response) => {
-                    this.comments.unshift(response.data);
-                    this.commentBox = '';
+                .then(function (response) {
+                    console.log(response);
                 })
                 .catch(function (error) {
+                    // var errors = $.parseJSON(error.responseText);
+                    // $.each(errors, function (key, value) {
+                    //     $('#' + key).parent().addClass('error');
+                    // });
                     console.log(error);
                 });
             }

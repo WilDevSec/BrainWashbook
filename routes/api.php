@@ -15,9 +15,8 @@ use App\Http\Controllers\CommentController;
 |
 */
 
-Route::middleware('auth:api')->group(function () {
-    Route::post('/posts/{post}/comment', [CommentController::class, 'store']);
-});
+Route::post('/posts/{id}/store', [CommentController::class, 'store'])->name('api.posts.{id}.store');
 
-Route::get('/posts/{post}/comments', [CommentController::class, 'index']);
+
+Route::get('/posts/{id}/index', [CommentController::class, 'index'])->name('api.posts.{id}.index');
 

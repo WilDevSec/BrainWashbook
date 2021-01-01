@@ -17,8 +17,9 @@ class CommentController extends Controller
     public function index($id)
     {
         $post = Post::findOrFail($id);
-        $comments = $post->comments()->get();
-        return response()->toJson($comments->with('user')->latest()->get());
+        $comments = $post->comments();
+        // return response()->toJson($comments->with('user')->latest()->get());
+        return $comments->with('user')->latest()->get();
     }
 
     /**
@@ -44,14 +45,20 @@ class CommentController extends Controller
         ]);
 
         $post = Post::findOrFail($id);
-        $comment = $post->comments()->create([
-            'body' => $request->body,
-            'user_id' => Auth::id()
-        ]);
-        #$comment = Comment::where('id', $comment->id)->with('user')->first();
+        $comment = new Comment();
+        $comment->body = $request->get('body');
+        $comment->post_id = $post->id;
+        if (Auth::check()){
+            // $comment->user_id = Auth::user()->id;
+            $comment->user_id = $request->user()->id;
+        }
+        // $comment->user_id = Auth::user()->id;
+        else {
+            return withMessage('Must be logged in to post comments');
+        }
+        $comment = Comment::where('id', $comment->id)->with('user')->first();
         $comment->save();
-        #return response()->toJson($comment);
-        return $comment->toJson();
+        return $comment;
     }
 
     /**
