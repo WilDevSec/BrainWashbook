@@ -39,6 +39,11 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        $validated = $request->validate([
+            'title' => ['required', 'unique:posts', 'max:255'],
+            'body' => ['required'],
+        ]);
+
         $post = new Post();
         $post->title = $request->input('title');
         $post->body = $request->get('body');
@@ -70,13 +75,12 @@ class PostController extends Controller
     public function edit(Request $request, $id)
     {
         $post = Post::findOrFail($id);
-        if ($post->user_id == $request->user()->id || $request->user()->){
+        if ($post->user_id == $request->user()->id || $request->user()->is_admin){
            return view('posts.edit')->with('post', $post);
         }
         else {
             return redirect('/newsfeed')->withMessage('You do not have permission to edit this post.');
         }
-        
     }
 
     /**
@@ -106,12 +110,12 @@ class PostController extends Controller
     public function destroy(Request $request, $id)
     {
         $post = Post::findOrFail($id);
-        if ($post->user_id == $request->user()->id || $request->routeIs('admin.*')){
+        if ($post->user_id == $request->user()->id || || $request->user()->is_admin){
             $post->delete();
             $msg = 'Post Deleted';
         }
         else {
-            $msg = 'Can only delete your own posts';
+            $msg = 'You do not have permission to delete this post';
         }
         return redirect('/newsfeed')->withMessage($msg);
     }

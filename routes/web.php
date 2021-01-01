@@ -36,7 +36,7 @@ Route::post('/posts/{id}/update', [PostController::class, 'update']);
 Route::get('/posts/{id}', [PostController::class, 'show']);
 Route::get('/posts/{id}/delete', [PostController::class, 'destroy']);
 // Route::post('/posts/{id}/comment', [PostController::class, 'saveComment']);
-Route::get('/admin/posts/{id}', [PostController::class, 'showAdmin'])->middleware('is_admin');
+Route::get('/admin/posts/{id}', [PostController::class, 'showAdmin'])->name('admin.posts.{id}')->middleware('is_admin');
 
 // Route::resource('comments', CommentController::class);
 

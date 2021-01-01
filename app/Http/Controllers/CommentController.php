@@ -41,7 +41,7 @@ class CommentController extends Controller
     public function store(Request $request, $id)
     {
         $validated = $request->validate([
-            'body' => 'required',
+            'body' => ['required'],
         ]);
 
         $post = Post::findOrFail($id);
