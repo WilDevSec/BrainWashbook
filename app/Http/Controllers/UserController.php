@@ -99,9 +99,15 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        //
+        $user = User::findOrFail($id);
+        if ($request->user()->is_admin){
+           $user->delete();
+        }
+        else {
+            return redirect('/home')->withMessage('You cannot delete this user.');
+        }
     }
 
     public function userposts($id)
@@ -109,4 +115,5 @@ class UserController extends Controller
         return Post::where('user_id', '=', $id)->paginate(10);
     }
 
+    
 }

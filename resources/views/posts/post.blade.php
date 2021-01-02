@@ -38,13 +38,13 @@
             </div>
             <div class="row">
                 <h6>Write a comment:</h6>
-                <form method="POST" id="commentForm">
+                <form action="/posts/{{$post->id}}/comment" method="POST">
                     @csrf
                     <div class="form-group" style="display:inline;">
-                        <input type="text" class="form-group" name="commentBody" id="commentBody"/>
+                        <input type="text" class="form-control"/>
                     </div>
                     <div class="form-group" style="display:inline;">
-                        <button class="btn btn-primary" type="submit" name="submit" id="submit"> {{-- @click="postComment" --}}
+                        <button class="btn btn-primary" type="submit">
                             Publish
                         </button>
                     </div>

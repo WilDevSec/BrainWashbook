@@ -44,21 +44,19 @@ class CommentController extends Controller
             'body' => ['required'],
         ]);
 
-        $post = Post::findOrFail($id);
         $comment = new Comment();
         $comment->body = $request->get('body');
-        $comment->post_id = $post->id;
+        $comment->post_id = $id;
         if (Auth::check()){
-            // $comment->user_id = Auth::user()->id;
             $comment->user_id = $request->user()->id;
         }
-        // $comment->user_id = Auth::user()->id;
         else {
             return withMessage('Must be logged in to post comments');
         }
-        $comment = Comment::where('id', $comment->id)->first();
+
         $comment->save();
-        return $comment->with('user');
+        $post->user->notify(new CommentOnPost($post));
+        return redirect('/posts/'$id)->withMessage($msg);
     }
 
     /**

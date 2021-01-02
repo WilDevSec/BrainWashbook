@@ -130,17 +130,6 @@ class PostController extends Controller
         return redirect('/newsfeed')->withMessage($msg);
     }
 
-    // Save Comment
-    public function saveCommentTwo(Request $request){
-        $data= new Comment();
-        $data->post_id=$request->post;
-        $data->comment_text=$request->comment;
-        $data->save();
-        return response()->json([
-            'bool'=>true
-        ]);
-    }
-
     public function showAdmin($id){
         $post = Post::findOrFail($id);
         $comments = $post->comments()->latest()->get();
