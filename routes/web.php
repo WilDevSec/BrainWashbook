@@ -38,6 +38,7 @@ Route::get('/posts/{id}/delete', [PostController::class, 'destroy']);
 // Route::post('/posts/{id}/comment', [PostController::class, 'saveComment']);
 Route::get('/admin/posts/{id}', [PostController::class, 'showAdmin'])->name('admin.posts.{id}')->middleware('is_admin');
 
+Route::post('posts/image', [ImageController::class, 'upload'])->name('posts.image');
 // Route::resource('comments', CommentController::class);
 
 Auth::routes();

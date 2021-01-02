@@ -7,17 +7,16 @@
         <div class="card-header">{{$post->title}}</div>
         <div class="card-body">
             <div class="row" style="margin-top:2px;margin-bottom:40px;">
-                "<h5 class="card-title">{{$post->body}}</h5>
+                <img src="{{ asset('images/' . $post->image) }}" height="400" width="547"/>
+                <h5 class="card-title">{{$post->body}}</h5>
                 <p class="card-text">{{$post->user->name}} - {{$post->created_at}}</p>
             </div>
-            <div>
+            <div style="display:inline-flexbox;text-align:center;">
                 <form action="/posts/{{$post->id}}/edit">
                     <button class="btn btn-primary">
                         Edit Post
                     </button>
                 </form>
-            </div>
-            <div>
                 <form action="/posts/{{$post->id}}/delete">
                     <button class="btn btn-primary">
                         Delete Post

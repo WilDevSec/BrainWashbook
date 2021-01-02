@@ -6,18 +6,26 @@
 	<div class="row">
 	    <div class="col-md-8 col-md-offset-2">
     		<h1>Create post</h1>
-			<form action="/posts" method="POST">
+			<form action="/posts" method="POST" enctype="multipart/form-data">
 				@csrf
-    		    
     		    <div class="form-group">
-    		        <label for="title">Title of your post</label>
+    		        <label for="title">Title of your post<span class="require">*</span></label>
     		        <input type="text" class="form-control" name="title" />
     		    </div>
     		    
     		    <div class="form-group">
     		        <label for="body">Tell the world what you know<span class="require">*</span></label>
     		        <textarea rows="5" class="form-control" name="body"></textarea>
-    		    </div>
+				</div>
+				
+				<div class="form-group">
+					@csrf
+					<div class="row">
+						<div class="col-md-6">
+							<input type="file" name="image" class="form-control">
+						</div>
+					</div>
+				</div class="form-group">
     		    
     		    <div class="form-group">
     		        <p><span class="require">*</span> - required fields</p>

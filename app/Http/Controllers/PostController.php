@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Intervention\Image\Facades\Image;
 
 class PostController extends Controller
 {
@@ -48,9 +49,18 @@ class PostController extends Controller
         $post->title = $request->input('title');
         $post->body = $request->get('body');
         $post->user_id = $request->user()->id;
+
+        if($request->hasFile('image')){
+            $image = $request->file('image');
+            $filename = $post->id . '.' . $image->getClientOriginalExtension();
+            $location = public_path('images/' . $filename);
+            Image::make($image)->resize(600,400)->save($location);
+            $post->image = $filename;
+        }
+
         $msg = 'Post published successfully';
         $post->save();
-        return redirect('/newsfeed')->withMessage ($msg);
+        return redirect('/newsfeed')->withMessage($msg);
     }
 
     /**
@@ -110,7 +120,7 @@ class PostController extends Controller
     public function destroy(Request $request, $id)
     {
         $post = Post::findOrFail($id);
-        if ($post->user_id == $request->user()->id || || $request->user()->is_admin){
+        if ($post->user_id == $request->user()->id || $request->user()->is_admin){
             $post->delete();
             $msg = 'Post Deleted';
         }
