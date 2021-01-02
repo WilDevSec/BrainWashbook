@@ -3,21 +3,23 @@
 @section('content')
 
 <div class="container">
-    <div class="card bg-light mb-3" style="max-width: 60%;padding:4em;margin:min(2%);">
-        <div class="card-header">{{$post->title}}</div>
-        <div class="card-body">
+    <div class="card bg-light mb-3" style="width:70%;margin:min(2%);">
+        <div class="card-header"><h3>{{$post->title}}</h3></div>
+        <div class="card-body" style="padding:4em;">
             <div class="row" style="margin-top:2px;margin-bottom:40px;">
-                <img src="{{ asset('images/' . $post->image) }}" height="400" width="547"/>
-                <h5 class="card-title">{{$post->body}}</h5>
-                <p class="card-text">{{$post->user->name}} - {{$post->created_at}}</p>
+                @if($post->image != null)
+                    <img src="{{ asset('images/' . $post->image) }}" height="450" width="650"/>
+                @endif
+                <p class="card-title">{{$post->body}}</p>
+                <h6 style="margin-left:auto;margin-right:0;color:#222;">{{$post->user->name}} - {{$post->created_at}}</h6>
             </div>
-            <div style="display:inline-flexbox;text-align:center;">
-                <form action="/posts/{{$post->id}}/edit">
+            <div>
+                <form action="/posts/{{$post->id}}/edit" style="display:inline;">
                     <button class="btn btn-primary">
                         Edit Post
                     </button>
                 </form>
-                <form action="/posts/{{$post->id}}/delete">
+                <form action="/posts/{{$post->id}}/delete" style="display:inline;">
                     <button class="btn btn-primary">
                         Delete Post
                     </button>
@@ -30,18 +32,18 @@
                     <div class="media-body">
                         <h6 class="media-heading" >@{{comment.user.name}}:</h6>
                         <p>@{{comment.body}}</p>
-                        <span style="color: #aaa;">on @{{comment.created_at}}</span>
+                        <span style="color:#aaa;">on @{{comment.created_at}}</span>
                     </div>
                 </div>
             </div>
             <div class="row">
-                <h6>Write a comment</h6>
+                <h6>Write a comment:</h6>
                 <form method="POST" id="commentForm">
                     @csrf
-                    <div class="form-group">
+                    <div class="form-group" style="display:inline;">
                         <input type="text" class="form-group" name="commentBody" id="commentBody"/>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" style="display:inline;">
                         <button class="btn btn-primary" type="submit" name="submit" id="submit"> {{-- @click="postComment" --}}
                             Publish
                         </button>

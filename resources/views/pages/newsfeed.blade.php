@@ -9,12 +9,20 @@
         <div style="width:110em;">
         @if(count($posts)>0)
             @foreach($posts as $post)
-            <div class="card bg-light mb-3" style="padding:4em;margin:min(2%);">
+            <div class="card bg-light mb-3" >
                 <div class="card-header">{{$post->title}}</div>
-                    <div class="card-body">
+                    <div class="card-body" style="padding:4em;margin:min(2%);">
                         <h6 class="card-title">{{$post->body}}</h6>
+                        @if($post->image != null)
+                            <img src="{{ asset('images/' . $post->image) }}" height="450" width="650"/>
+                        @endif
                         <p class="card-text">{{$post->user->name}} - {{$post->created_at}}</p>
-                        <a href="/posts/{{$post->id}}">View Post</a>
+                        <form action="/posts/{{$post->id}}">
+                            <button class="btn btn-primary">
+                                View Post
+                            </button>
+                        </form>
+                        
                     </div>
                 </div>
             </div>

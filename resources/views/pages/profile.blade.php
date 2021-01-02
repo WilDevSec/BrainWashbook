@@ -14,12 +14,17 @@
         margin-left:4%;">
         <ul class ="list-group">
             <li class="list-group-item">
-                Joined on {{$user->created_at->format('M d,Y \a\t h:i a') }}
+                @if($user->created_at != null)
+                    Joined on {{$user->created_at->format('M d,Y \a\t h:i a') }}
+                @endif
             </li>
             @foreach($posts as $post)
-            <div class="card bg-light mb-3" style="max-width: 60%;padding:4em;margin:min(2%);">
+            <div class="card bg-light mb-3" >
                 <div class="card-header">{{$post->title}}</div>
-                <div class="card-body">
+                @if($post->image != null)
+                            <img src="{{ asset('images/' . $post->image) }}" height="450" width="650"/>
+                @endif
+                <div class="card-body" style="max-width: 60%;padding:4em;margin:min(2%);">
                     <h6 href="#" class="card-title">{{$post->body}}</h6>
                     <p class="card-text">{{$post->user->name}} - {{$post->created_at}}</p>
                     
