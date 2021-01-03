@@ -90,6 +90,7 @@ class PostController extends Controller
     public function edit(Request $request, $id)
     {
         $post = Post::findOrFail($id);
+
         if ($post->user_id == $request->user()->id || $request->user()->is_admin){
            return view('posts.edit')->with('post', $post);
         }
