@@ -10,7 +10,7 @@
         @if(count($posts)>0)
             @foreach($posts as $post)
             <div class="card bg-light mb-3" >
-                <div class="card-header">{{$post->title}}</div>
+                <div class="card-header"><h3>{{$post->title}}</h3></div>
                     <div class="card-body" style="padding:4em;margin:min(2%);">
                         <h6 class="card-title">{{$post->body}}</h6>
                         @if($post->image != null)

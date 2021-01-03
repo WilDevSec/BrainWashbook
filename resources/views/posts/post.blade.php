@@ -33,19 +33,19 @@
                         <h6 class="media-heading" >@{{comment.user.name}}:</h6>
                         <p>@{{comment.body}}</p>
                         <span style="color:#aaa;">on @{{comment.created_at}}</span>
+                        <hr>
                     </div>
                 </div>
             </div>
             <div class="row">
-                <h6>Write a comment:</h6>
                 <form action="/posts/{{$post->id}}/comment" method="POST">
                     @csrf
-                    <div class="form-group" style="display:inline;">
-                        <input type="text" class="form-control" name="body"/>
+                    <div class="form-group" style="display:inline-block;">
+                        <textarea rows="5" cols="90" class="form-control" name="body" placeholder="Enter comment"/></textarea>
                     </div>
-                    <div class="form-group" style="display:inline;">
+                    <div class="form-group" >
                         <button class="btn btn-primary" type="submit">
-                            Publish
+                            Reply
                         </button>
                     </div>
                 </form>
