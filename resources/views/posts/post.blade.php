@@ -8,7 +8,7 @@
         <div class="card-body" style="padding:4em;">
             <div class="row" style="margin-top:2px;margin-bottom:40px;">
                 @if($post->image != null)
-                    <img src="{{ asset('images/' . $post->image) }}" height="450" width="650"/>
+                    <img src="{{ asset('images/' . $post->image) }}" height="450" width="650" alt="Image placed here. Ask post owner for description"/>
                 @endif
                 <p class="card-title">{{$post->body}}</p>
                 <h6 style="margin-left:auto;margin-right:0;color:#222;">{{$post->user->name}} - {{$post->created_at}}</h6>
@@ -41,7 +41,7 @@
                 <form action="/posts/{{$post->id}}/comment" method="POST">
                     @csrf
                     <div class="form-group" style="display:inline;">
-                        <input type="text" class="form-control"/>
+                        <input type="text" class="form-control" name="body"/>
                     </div>
                     <div class="form-group" style="display:inline;">
                         <button class="btn btn-primary" type="submit">

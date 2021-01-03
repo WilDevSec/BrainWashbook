@@ -6,6 +6,7 @@ use App\Models\Comment;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Notifications\CommentOnPost;
 
 class CommentController extends Controller
 {
@@ -43,10 +44,10 @@ class CommentController extends Controller
         $validated = $request->validate([
             'body' => ['required'],
         ]);
-
+        $post = Post::findOrFail($id);
         $comment = new Comment();
         $comment->body = $request->get('body');
-        $comment->post_id = $id;
+        $comment->post_id = $post->id;
         if (Auth::check()){
             $comment->user_id = $request->user()->id;
         }
@@ -56,7 +57,7 @@ class CommentController extends Controller
 
         $comment->save();
         $post->user->notify(new CommentOnPost($post));
-        return redirect('/posts/'$id)->withMessage($msg);
+        return redirect('/posts/'.$id)->withMessage('Comment successfully added');
     }
 
     /**

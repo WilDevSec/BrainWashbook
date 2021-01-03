@@ -48,7 +48,12 @@ class PostController extends Controller
         $post = new Post();
         $post->title = $request->input('title');
         $post->body = $request->get('body');
-        $post->user_id = $request->user()->id;
+        if (Auth::check()){
+            $comment->user_id = $request->user()->id;
+        }
+        else {
+            return withMessage('Must be logged in to create posts');
+        }
 
         if($request->hasFile('image')){
             $image = $request->file('image');

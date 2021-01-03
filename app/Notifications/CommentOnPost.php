@@ -7,19 +7,21 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
+use App\Models\Post;
+
 class CommentOnPost extends Notification
 {
     use Queueable;
+    private $post;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(Post $post, User $user)
+    public function __construct(Post $post)
     {
-        this->post = $post;
-        this->user = $post;
+        $this->post = $post;
     }
 
     /**
@@ -41,12 +43,11 @@ class CommentOnPost extends Notification
      */
     public function toMail($notifiable)
     {
-        $id = $post->id;
-        $url = url('project1.test/posts/'$id);
+        $url = url('/posts/'.$this->post->id);
         return (new MailMessage)
                     ->from('BWB@example.com', 'BrainWashBook')
                     ->greeting('Hello human being!')
-                    ->line('Someone has commented in one of your posts!')
+                    ->line('Someone has commented on one of your posts!')
                     ->line('View the post here:')
                     ->action('View Post', $url)
                     ->line('Thank you for using BrainWashBook!');
@@ -61,8 +62,7 @@ class CommentOnPost extends Notification
     public function toArray($notifiable)
     {
         return [
-            'post' => this.$post,
-            'user' => this.$user,
+            //
         ];
     }
 }
