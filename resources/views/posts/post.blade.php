@@ -59,24 +59,6 @@
 
 @section('script')
 <script>
-// $(document).ready(function(){
-//     $('#commentForm').on('submit', function(event){
-//         event.preventDefault();
-//         var form_data = $(this).serialize();
-//         $.ajax({
-//             url:"api/posts/"+this.post.id+"/store",
-//             method:"POST",
-//             data:form_data,
-//             dataType:"JSON",
-//             success:function(data){
-//                 if(data.error != ''){
-//                     $.('#commentForm')[0].reset();
-//                     $.('commentMessage').html(data.error);
-//                 }
-//             }
-//         })
-//     })
-// })
     const app = new Vue({
         el: '#app',
         data: {
@@ -94,7 +76,6 @@
                         this.comments = response.data;
                     })
                     .catch(response => {
-                        //need to add error handle better than console log here
                         console.log(response);
                     }
                 );
@@ -110,17 +91,6 @@
                 .catch(response => {
                     console.log(response);
                 });
-                // axios({
-                //     method: 'post',
-                //     body: document.getElementById("commentBody"),
-                //     url: '/api/posts/'+this.post.id+'/store'
-                // })
-                // .then(function (response) {
-                //     console.log(response);
-                // })
-                // .catch(function (error) {
-                //     console.log(error);
-                // });
             }
         }
     });
